@@ -13,9 +13,9 @@ Our tech stack will include:
 
 ## Resources
 
-https://martin-thoma.com/flask-gunicorn/
-https://docs.gunicorn.org/en/stable/settings.html#bind
-https://stackoverflow.com/questions/16416172/how-can-i-modify-procfile-to-run-gunicorn-process-in-a-non-standard-folder-on-he
+* https://martin-thoma.com/flask-gunicorn/
+* https://docs.gunicorn.org/en/stable/settings.html#bind
+* https://stackoverflow.com/questions/16416172/how-can-i-modify-procfile-to-run-gunicorn-process-in-a-non-standard-folder-on-he
 
 ## db schema diagram
 @TODO
