@@ -1,0 +1,28 @@
+0000000000000000000000000000000000000000 08195eba1333933648d5fbf7f6afdc3f9b1ecac9 Fabio-Ottaviani-Dev <F0Dev> 1576796568 -0800	commit (initial): Install flask Api, project: itemCMS Start.
+08195eba1333933648d5fbf7f6afdc3f9b1ecac9 cb73a6a2ac755ccbb95ed94ea939a20bafdf0b83 Fabio-Ottaviani-Dev <F0Dev> 1576871928 -0800	commit: Defined the project purpose, added base boilerplate
+cb73a6a2ac755ccbb95ed94ea939a20bafdf0b83 22a37d3dcf6fb69a8c516ec96c455f872c1d3cf5 Fabio-Ottaviani-Dev <F0Dev> 1576957317 -0800	commit: add test file, new setup Script
+22a37d3dcf6fb69a8c516ec96c455f872c1d3cf5 e4f396ffdd7a17c31904705b38bf9f44d6dc1498 Fabio-Ottaviani-Dev <F0Dev> 1576957583 -0800	commit: rev setup.bash
+e4f396ffdd7a17c31904705b38bf9f44d6dc1498 eb5c72b65835ef4816d1aca214337f135f51624c Fabio-Ottaviani-Dev <F0Dev> 1576958054 -0800	commit: rev setup.bash
+eb5c72b65835ef4816d1aca214337f135f51624c bd774a7b74fa0a5b831441ab700257d74f6e6898 Fabio-Ottaviani-Dev <F0Dev> 1576958468 -0800	commit: rev setup.bash
+bd774a7b74fa0a5b831441ab700257d74f6e6898 7754071f641dfb5476e1c1abee9df0cacaa8840c Fabio-Ottaviani-Dev <F0Dev> 1576958706 -0800	commit: rev setup.bash
+7754071f641dfb5476e1c1abee9df0cacaa8840c b63696c0c4f99808b01a441d5143afe5050e2181 Fabio-Ottaviani-Dev <F0Dev> 1576963221 -0800	commit: add test.bash
+b63696c0c4f99808b01a441d5143afe5050e2181 b752baba9b157c1526ef98b05dfc77f5646898d6 Fabio-Ottaviani-Dev <F0Dev> 1577046076 -0800	commit: new manage.py , minor revisons
+b752baba9b157c1526ef98b05dfc77f5646898d6 d3c760ec558cf8cfd6a89676b24cdff9286adc08 Fabio-Ottaviani-Dev <F0Dev> 1577072531 -0800	commit: update requirements.txt
+d3c760ec558cf8cfd6a89676b24cdff9286adc08 c96e30dcd8f4bda5dccb25bd98d4c2b3e9eed243 Fabio-Ottaviani-Dev <F0Dev> 1577075716 -0800	commit: Add Heroku conf files
+c96e30dcd8f4bda5dccb25bd98d4c2b3e9eed243 b7838675174c1075e4c9052a98aaab31b54e5b3a Fabio-Ottaviani-Dev <F0Dev> 1577150824 -0800	commit: Add postgresql, debug
+b7838675174c1075e4c9052a98aaab31b54e5b3a 15d9fcf83f5afe8bb344f583382f206eb1c2f875 Fabio-Ottaviani-Dev <F0Dev> 1577228320 -0800	commit: minor rev to manage.py
+15d9fcf83f5afe8bb344f583382f206eb1c2f875 e833e824412f184ecf9875c546181019ea944cdc Fabio-Ottaviani-Dev <F0Dev> 1577230712 -0800	commit: setup remote psql conf
+e833e824412f184ecf9875c546181019ea944cdc 894b046183c3ae74d5f77d9e065ce381369e6b6c Fabio-Ottaviani-Dev <F0Dev> 1577301364 -0800	commit: rev config
+894b046183c3ae74d5f77d9e065ce381369e6b6c ae1ae2f950b51a85da9febc2bda802244f9cc5f1 Fabio-Ottaviani-Dev <F0Dev> 1577305080 -0800	commit: test on import bug
+ae1ae2f950b51a85da9febc2bda802244f9cc5f1 8c03e4fbf40896be927853fee262956d5a21be41 Fabio-Ottaviani-Dev <F0Dev> 1577314743 -0800	commit: test path, import
+8c03e4fbf40896be927853fee262956d5a21be41 f67f3a79b1db6dff916f1252bb99a383ebcadb7b Fabio-Ottaviani-Dev <F0Dev> 1577317048 -0800	commit: Heroku base test
+f67f3a79b1db6dff916f1252bb99a383ebcadb7b f2bf00605e927841a99e903ea90a6887e76cfcf4 Fabio-Ottaviani-Dev <F0Dev> 1577317433 -0800	commit: Heroku test in progress
+f2bf00605e927841a99e903ea90a6887e76cfcf4 90b913f552cb9f8e901b67c476fc364d781b229b Fabio-Ottaviani-Dev <F0Dev> 1577318075 -0800	commit: Heroku test in progress
+90b913f552cb9f8e901b67c476fc364d781b229b 62d144aeabfe5d1377f0eafaca1454c598bbef71 Fabio-Ottaviani-Dev <F0Dev> 1577318675 -0800	commit: Heroku test in progress
+62d144aeabfe5d1377f0eafaca1454c598bbef71 f43b320b262c1a515a0fa61054856d1c271b19cf Fabio-Ottaviani-Dev <F0Dev> 1577319335 -0800	commit: Heroku test in progress
+f43b320b262c1a515a0fa61054856d1c271b19cf 82e7103839049376545f4452e006a7a1ce7b6817 Fabio-Ottaviani-Dev <F0Dev> 1577320289 -0800	commit: Heroku test in progress
+82e7103839049376545f4452e006a7a1ce7b6817 5e4f6d2c904b1c59e53df9c1cb3d5d4fc479bd1d Fabio-Ottaviani-Dev <F0Dev> 1577320617 -0800	commit: Heroku test in progress
+5e4f6d2c904b1c59e53df9c1cb3d5d4fc479bd1d 896e2d60be3d940a59f7899f740a7430ed3e360c Fabio-Ottaviani-Dev <F0Dev> 1577321297 -0800	commit: Heroku test in progress
+896e2d60be3d940a59f7899f740a7430ed3e360c fba637b70b0413c5e0eea466a23628b820a93a5c Fabio-Ottaviani-Dev <F0Dev> 1577321665 -0800	commit: Heroku test in progress
+fba637b70b0413c5e0eea466a23628b820a93a5c 14267c52dc1e5028bd9f34393258fe897f45a2e0 Fabio-Ottaviani-Dev <F0Dev> 1577323933 -0800	commit: Heroku test n3
+14267c52dc1e5028bd9f34393258fe897f45a2e0 0458f164f589d07a32b843ce1c0799bba1dab85d Fabio-Ottaviani-Dev <F0Dev> 1577565831 -0800	commit: Rev project db structure and functions
