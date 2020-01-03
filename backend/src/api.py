@@ -169,22 +169,25 @@ def test_auth():
 @app.route('/items', methods=['GET'])
 def get_items():
 
-    items1 = Item.query.order_by(Item.name).all()
+    items = Item.query.order_by(Item.name).all()
 
-    #data1  = db.session.query(Item, Category).filter(Item.category_id == Category.id)
+    data = db.session.query(
+        Item.id,
+        Category.name.label('category'),
+        Item.name,
+        Item.description,
+        Item.price
+    ).filter(Item.category_id == Category.id).all()
 
-    # data2 = db.session.query(
-    #     Item.id,
-    #     Category.name.label('category'),
-    #     Item.name,
-    #     Item.description,
-    #     Item.price
-    # ).filter(Item.category_id == Category.id)
+    print("\n\n items : -->", items[0])
 
-    items = db.session.query(Item, Category).filter(Item.category_id == Category.id).all()
+    # RETURN: items : --> <class 'manage.Item'>: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x110c56610>, 'description': 'Lorem ipsum dolor sit amet - Item 01 AA', 'name': 'Item 01 AA', 'id': 1, 'price': 110, 'category_id': 1}
+
+    print("\n\n data : -->", data[0])
+
+    # RETURN: data : --> (1, 'Category 01 AA', 'Item 01 AA', 'Lorem ipsum dolor sit amet - Item 01 AA', 110)
 
     result = [item.format() for item in items]
-
     total_results = len(items)
 
     if total_results == 0:

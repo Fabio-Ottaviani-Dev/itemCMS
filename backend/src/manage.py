@@ -34,6 +34,19 @@ def db_drop_and_create_all():
     db.session.add(Item(id = 3, category_id = 2, name = "Item 03 AA", description = "Lorem ipsum dolor sit amet - Item 03 AA", price = 130))
     db.session.commit()
 
+    #data2 = db.session.query(Item, Category).filter(Item.category_id == Category.id).all()
+
+    # data2 = db.session.query(
+    #     Item.id,
+    #     Category.name.label('category'),
+    #     Item.name,
+    #     Item.description,
+    #     Item.price
+    # ).filter(Item.category_id == Category.id)
+    #
+    # for row in data2:
+    #     print(row)
+
 # ----------------------------------------------------------------------------
 # category
 # ----------------------------------------------------------------------------
@@ -61,8 +74,8 @@ class Category(db.Model):
             'name': self.name
         }
 
-    def __repr__(self):
-        return 'Category: --> id: {} | name: {}'.format(self.id, self.name)
+    # def __repr__(self):
+    #     return 'Category: --> id: {} | name: {}'.format(self.id, self.name)
 
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
@@ -90,8 +103,8 @@ class Item(db.Model):
             'price':        self.price
         }
 
-    def __repr__(self):
-        return '<Item {}>'.format(self.name)
+    # def __repr__(self):
+    #     return '<Item {}>'.format(self.name)
 
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
