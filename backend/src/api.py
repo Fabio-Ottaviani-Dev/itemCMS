@@ -163,22 +163,25 @@ def test_auth():
 	return jsonify(AuthTest())
 # ----------------------------------------------------------------------------
 # Read >> items TEST
+# https://stackoverflow.com/questions/11530196/flask-sqlalchemy-query-specify-column-names
 # ----------------------------------------------------------------------------
 
 @app.route('/items', methods=['GET'])
 def get_items():
 
-    items = Item.query.order_by(Item.name).all()
+    items1 = Item.query.order_by(Item.name).all()
 
     #data1  = db.session.query(Item, Category).filter(Item.category_id == Category.id)
 
-    data = db.session.query(
-        Item.id,
-        Category.name.label('category'),
-        Item.name,
-        Item.description,
-        Item.price
-    ).filter(Item.category_id == Category.id)
+    # data2 = db.session.query(
+    #     Item.id,
+    #     Category.name.label('category'),
+    #     Item.name,
+    #     Item.description,
+    #     Item.price
+    # ).filter(Item.category_id == Category.id)
+
+    items = db.session.query(Item, Category).filter(Item.category_id == Category.id).all()
 
     result = [item.format() for item in items]
 
