@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
+
 app = Flask(__name__)
 
 app.config.from_object('config')
@@ -26,11 +27,11 @@ def db_drop_and_create_all():
 
     db.session.add(Category(id = 1, name = "Category 01 AA"))
     db.session.add(Category(id = 2, name = "Category 02 BB"))
+    db.session.commit()
 
     db.session.add(Item(id = 1, category_id = 1, name = "Item 01 AA", description = "Lorem ipsum dolor sit amet - Item 01 AA", price = 110))
     db.session.add(Item(id = 2, category_id = 1, name = "Item 02 AA", description = "Lorem ipsum dolor sit amet - Item 02 AA", price = 120))
     db.session.add(Item(id = 3, category_id = 2, name = "Item 03 AA", description = "Lorem ipsum dolor sit amet - Item 03 AA", price = 130))
-
     db.session.commit()
 
 # ----------------------------------------------------------------------------
@@ -39,8 +40,20 @@ def db_drop_and_create_all():
 
 class Category(db.Model):
     __tablename__   = 'categories'
-    id              = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    id              = db.Column(db.Integer, primary_key=True)
+   #id              = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     name            = db.Column(db.String(150), nullable=False)
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def format(self):
         return {
