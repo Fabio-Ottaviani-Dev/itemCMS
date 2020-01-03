@@ -79,9 +79,11 @@ class Item(db.Model):
     description     = db.Column(db.String, nullable=False)
     price           = db.Column(db.Integer, primary_key=True, nullable=False)
 
+
     def format(self):
         return {
             'id':           self.id,
+            #'category':     self.category,
             'category_id':  self.category_id,
             'name':         self.name,
             'description':  self.description,

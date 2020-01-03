@@ -167,10 +167,21 @@ def test_auth():
 
 @app.route('/items', methods=['GET'])
 def get_items():
+
     items = Item.query.order_by(Item.name).all()
 
-    #data  = db.session.query(Item, Category).filter(Item.category_id == Category.id)
+    #data1  = db.session.query(Item, Category).filter(Item.category_id == Category.id)
+
+    data = db.session.query(
+        Item.id,
+        Category.name.label('category'),
+        Item.name,
+        Item.description,
+        Item.price
+    ).filter(Item.category_id == Category.id)
+
     result = [item.format() for item in items]
+
     total_results = len(items)
 
     if total_results == 0:
