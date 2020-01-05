@@ -4,54 +4,45 @@
 Item CMS is a basic RESTful APIs framework design to manage items, the not typed structure is designed to be suitable for a wide range of products / items.
 
 ## Tech Stack (Key Dependencies)
-Our tech stack will include:
+The tech stack will include:
+
+* **[Python3](https://www.python.org/)** and **[Flask](http://flask.palletsprojects.com)** as server language and server framework.
 
 * **[SQLAlchemy](https://www.sqlalchemy.org/)** ORM library.
-* **[db](#db)** database.
-* **[Python3](https://www.python.org/)** and **[Flask](http://flask.palletsprojects.com)** as server language and server framework
-* **[Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)** for creating and running schema migrations
 
-## Resources
+* **[Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)** for creating and running schema migrations.
 
-* https://martin-thoma.com/flask-gunicorn/
-* https://docs.gunicorn.org/en/stable/settings.html#bind
-* https://stackoverflow.com/questions/16416172/how-can-i-modify-procfile-to-run-gunicorn-process-in-a-non-standard-folder-on-he
+* **[Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#)** to handle cross origin requests.
 
-## db schema diagram
-@TODO
+## Installing Dependencies
 
-## Authentication
-The authentication, related profiles, privileges and roles are implemented with [Auth0](https://auth0.com/)
+### Python 3.8
 
-### Profile and role
+Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
 
-| Actor         | Role          | CURD Privileges      |
-| ------------- | ------------- | -------------------- |
-| Admin         | Administrator | All                  |
-| User          | User          | See the schema below |
+### PostgreSQL
+Follow instructions to install the latest version of  PostgreSQL for your platform in the [PostgreSQL download](https://www.postgresql.org/download/)
 
-## User CURD privileges
+### Virtual Enviornment
+Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
-| Tables          | Create | Update | Read   | Delete  |
-| --------------- | ------ | ------ | ------ |  ------ |
-| items           | True   | True   | True   | True    |
-| categories      | True   | True   | True   | False   |
-
-## Development Setup
-
-#### Install
+### PIP Dependencies
+With your virtual environment setup and running, install dependencies by running:
 
 ```bash
-
-# @TODO
-
+pip3 install -r requirements.txt
 ```
 
-#### Running the server
+This will install all of the required packages we selected within the `requirements.txt` file.
 
+### Database Setup
+With Postgres running, in terminal run:
 ```bash
+createdb itemcms
+```
 
-
+### Running the server
+```bash
 # -----------------------------------------------------------------------------
 # gunicorn
 # -----------------------------------------------------------------------------
@@ -59,28 +50,22 @@ The authentication, related profiles, privileges and roles are implemented with 
 # Heroku
 web: gunicorn --bind 127.0.0.1:5000 --pythonpath backend/src wsgi:app
 
+
 # Local
-# https://docs.gunicorn.org/en/stable/settings.html#bind
+# NOTE change "Billy" with your postgresql user
 cd <mainDir>
 source env/bin/activate
 export DATABASE_URL="postgresql://Billy@localhost:5432/itemcms" &&
 export DEBUG=True &&
-gunicorn --bind 127.0.0.1:5000 --pythonpath backend/src wsgi:app --reload
+gunicorn --bind 127.0.0.1:5000 --pythonpath backend/src wsgi:app --reload --log-level debug
 
 # -----------------------------------------------------------------------------
-
 ```
 
-## Testing base endpoints
+## db drop and create all
 
-#### GET / Return 200
+Got to: http://127.0.0.1:5000/reset-db
 
-```bash
-curl -X GET http://127.0.0.1:5000/
-```
+## Base endpoint
 
-#### GET /abc Return 404
-
-```bash
-curl -X GET http://127.0.0.1:5000/abc
-```
+Got to: http://127.0.0.1:5000/items

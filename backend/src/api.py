@@ -3,7 +3,8 @@ from flask import Flask, request, abort, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from utilities.errorhandler import http_error_handler
-from auth.auth0 import AuthTest
+#from auth.auth0 import AuthTest
+from auth.auth import AuthError, requires_auth
 from manage import Category, Item, db_drop_and_create_all
 
 from datetime import datetime
@@ -31,12 +32,38 @@ def after_request(response):
 # db_drop_and_create
 # ----------------------------------------------------------------------------
 
-@app.route('/reset-db')
+@app.route('/reset-db', methods=['GET'])
 def reset_db():
     db_drop_and_create_all()
     return jsonify({
         'success': True,
         'message': 'db_drop_and_create_all: --> {} @DONE! '.format(date_time)
+    }), 200
+
+# ----------------------------------------------------------------------------
+# index / sys.path TEST
+# ----------------------------------------------------------------------------
+
+@app.route('/', methods=['GET'])
+def hello_dude():
+	return jsonify({
+        'sys.path': sys.path,
+        'message': 'Hello, datetime: - {}'.format(date_time)
+    }), 200
+
+# ----------------------------------------------------------------------------
+# Auth TEST
+# ----------------------------------------------------------------------------
+# @app.route('/auth', methods=['GET'])
+# def test_auth():
+# 	return jsonify(AuthTest())
+# ----------------------------------------------------------------------------
+
+@app.route('/login-results', methods=['GET'])
+def login_results():
+    return jsonify({
+        'success':  True,
+        'access_token info': 'Look on the address bar and grab your access token from the url'
     }), 200
 
 # ----------------------------------------------------------------------------
@@ -46,8 +73,11 @@ def reset_db():
     # OK 201 | curl -X POST -H "Content-Type: application/json" -d '{"name":"New Category N. 3"}' http://127.0.0.1:5000/categories
     # OK 400 | curl -X POST -H "Content-Type: application/json" -d '{"id":"100"}' http://127.0.0.1:5000/categories
 # **DONE**
+# ----------------------------------------------------------------------------
 
 @app.route('/categories', methods=['POST'])
+# @requires_auth('create:category')
+# pass: --> payload
 def create_category():
 
     name = request.json.get('name', None)
@@ -67,12 +97,12 @@ def create_category():
     except:
         abort(422)
 
-
 # ----------------------------------------------------------------------------
 # Read >> All Categories
 # ----------------------------------------------------------------------------
 # @TEST
     # OK 200 | curl -X GET http://127.0.0.1:5000/categories
+# ----------------------------------------------------------------------------
 
 @app.route('/categories', methods=['GET'])
 def get_all_categories():
@@ -98,8 +128,11 @@ def get_all_categories():
     # OK 400 | curl -X PATCH -H "Content-Type: application/json" -d '{"Name":"New Category N. 3 REV"}' http://127.0.0.1:5000/categories/3
     # OK 200 | curl -X PATCH -H "Content-Type: application/json" -d '{"name":"New Category N. 3 REV"}' http://127.0.0.1:5000/categories/3
 # **DONE**
+# ----------------------------------------------------------------------------
 
 @app.route('/categories/<int:category_id>', methods=['PATCH'])
+# @requires_auth('update:category')
+# pass: --> payload
 def update_category(category_id):
 
     name = request.json.get('name', None)
@@ -127,11 +160,15 @@ def update_category(category_id):
 # ----------------------------------------------------------------------------
 # Delete >> Category
 # ----------------------------------------------------------------------------
+# @TODO: (if it is not associated with any items)
 # @TEST
     # OK 404 | curl -X DELETE http://127.0.0.1:5000/categories/99
     # OK 200 | curl -X DELETE http://127.0.0.1:5000/categories/6
+# ----------------------------------------------------------------------------
 
 @app.route('/categories/<int:category_id>', methods=['DELETE'])
+# @requires_auth('delete:category')
+# pass: --> payload
 def delete_category(category_id):
 
     category = Category.query.get_or_404(category_id)
@@ -147,20 +184,59 @@ def delete_category(category_id):
     }), 200
 
 # ----------------------------------------------------------------------------
-# sys.path TEST
+# Create >> Item
+# ----------------------------------------------------------------------------
+# @TODO: check if category_id exist then insert
+# @TEST
+    # OK 201
+    # curl -X POST -H "Content-Type: application/json" -d '{
+    #   "category_id":"2",
+    #   "name":"New Item curl Test 2",
+    #   "description":"New Item curl Test 2 > description",
+    #   "price":"210"
+    # }' http://127.0.0.1:5000/items
+
+    # OK 400
+    # curl -X POST -H "Content-Type: application/json" -d '{
+    #   "category_id":"2",
+    #   "description":"New Item curl Test 2 > description",
+    #   "price":"210"
+    # }' http://127.0.0.1:5000/items
+# **DONE**
 # ----------------------------------------------------------------------------
 
-@app.route('/')
-@app.route('/index')
-def hello_dude():
-	return jsonify({'sys.path':sys.path, 'message':'Hello, Dude - {}'.format(date_time)})
+@app.route('/items', methods=['POST'])
+# @requires_auth('create:item')
+# pass: --> payload
+def create_item():
 
-# ----------------------------------------------------------------------------
-# Auth TEST
-# ----------------------------------------------------------------------------
-@app.route('/auth')
-def test_auth():
-	return jsonify(AuthTest())
+    category_id     = request.json.get('category_id', None)
+    name            = request.json.get('name', None)
+    description     = request.json.get('description', None)
+    price           = request.json.get('price', None)
+
+    if category_id is None or name is None or description is None or price is None:
+        abort(400)
+
+    try:
+
+        item = Item(
+            category_id = category_id,
+            name        = name,
+            description = description,
+            price       = price
+        )
+
+        item.insert()
+
+        return jsonify({
+            'success':  True,
+            'item': item.format()
+        }), 201 # 201=Created
+
+    except:
+        abort(422)
+
 # ----------------------------------------------------------------------------
 # Read >> items TEST
 # https://stackoverflow.com/questions/11530196/flask-sqlalchemy-query-specify-column-names
@@ -180,11 +256,9 @@ def get_items():
     ).filter(Item.category_id == Category.id).all()
 
     print("\n\n items : -->", items[0])
-
     # RETURN: items : --> <class 'manage.Item'>: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x110c56610>, 'description': 'Lorem ipsum dolor sit amet - Item 01 AA', 'name': 'Item 01 AA', 'id': 1, 'price': 110, 'category_id': 1}
 
     print("\n\n data : -->", data[0])
-
     # RETURN: data : --> (1, 'Category 01 AA', 'Item 01 AA', 'Lorem ipsum dolor sit amet - Item 01 AA', 110)
 
     result = [item.format() for item in items]
