@@ -1,6 +1,7 @@
 import sys
 from flask import Flask, request, abort, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 from flask_cors import CORS
 from utilities.errorhandler import http_error_handler
 #from auth.auth0 import AuthTest
@@ -135,12 +136,12 @@ def get_all_categories():
 # pass: --> payload
 def update_category(category_id):
 
+    category = Category.query.get_or_404(category_id)
+
     name = request.json.get('name', None)
 
     if name is None:
         abort(400)
-
-    category = Category.query.get_or_404(category_id)
 
     try:
         if name:
@@ -270,6 +271,83 @@ def get_items():
     return jsonify({
         'success':  True,
         'items':   result
+    }), 200
+
+# ----------------------------------------------------------------------------
+# Update >> Item
+# @TEST
+# OK 201
+    # curl -X PATCH -H "Content-Type: application/json" -d '{
+    #   "category_id":"2",
+    #   "name":"Item Update, curl Test PATCH id 1",
+    #   "description":"Item Update, curl Test PATCH id 1 description",
+    #   "price":"210"
+    # }' http://127.0.0.1:5000/items/1
+
+# OK 404 with item_id = 10000
+# OK 400 & 500
+# ----------------------------------------------------------------------------
+
+@app.route('/items/<int:item_id>', methods=['PATCH'])
+# @requires_auth('update:item')
+# pass: --> payload
+def update_item(item_id):
+
+    item = Item.query.get_or_404(item_id)
+
+    try:
+        category_id     = request.json.get('category_id', None)
+        name            = request.json.get('name', None)
+        description     = request.json.get('description', None)
+        price           = request.json.get('price', None)
+
+        if category_id is None or name is None or description is None or price is None:
+            abort(400)
+
+        item.category_id    = category_id
+        item.name           = name
+        item.description    = description
+        item.price          = price
+        item.name           = name
+
+        item.update()
+        response = item.format()
+
+        return jsonify({
+            'success':  True,
+            'category': response
+        }), 200
+
+    except exc.SQLAlchemyError:
+        db.session.rollback()
+        abort(500)
+    except:
+        db.session.rollback()
+        abort(400)
+    finally:
+        db.session.close()
+
+# ----------------------------------------------------------------------------
+# Delete >> Item
+    # OK 404 | curl -X DELETE http://127.0.0.1:5000/items/99
+    # OK 200 | curl -X DELETE http://127.0.0.1:5000/items/1
+
+
+@app.route('/items/<int:item_id>', methods=['DELETE'])
+# @requires_auth('delete:item')
+# pass: --> payload
+def delete_item(item_id):
+
+    item = Item.query.get_or_404(item_id)
+
+    try:
+        item.delete()
+    except exc.SQLAlchemyError:
+        abort(500)
+
+    return jsonify({
+        'success':  True,
+        'delete':   item_id
     }), 200
 
 # ----------------------------------------------------------------------------
