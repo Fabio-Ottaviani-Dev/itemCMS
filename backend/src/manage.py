@@ -42,7 +42,6 @@ class Category(db.Model):
     __tablename__   = 'categories'
     id              = db.Column(db.Integer, primary_key=True)
     name            = db.Column(db.String(150), nullable=False)
-    category        = db.relationship("Category", backref="item")
 
     def insert(self):
         db.session.add(self)
@@ -75,6 +74,7 @@ class Item(db.Model):
     __tablename__   = 'items'
     id              = db.Column(db.Integer, primary_key=True)
     category_id     = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    category        = db.relationship("Category", backref="item")
     name            = db.Column(db.String(150), unique=True, nullable=False)
     description     = db.Column(db.String, nullable=False)
     price           = db.Column(db.Integer, nullable=False)
