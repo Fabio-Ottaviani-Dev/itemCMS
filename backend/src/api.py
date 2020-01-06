@@ -246,32 +246,42 @@ def create_item():
 @app.route('/items', methods=['GET'])
 def get_items():
 
-    items = Item.query.order_by(Item.name).all()
+    #items = Item.query.order_by(Item.name).all()
+    #items = Item.query.filter(Item.category_id == Category.id).all()
+    items = db.session.query( Item ).join(Category, Item.category_id == Category.id).filter().all()
 
-    data = db.session.query(
-        Item.id,
-        Category.name.label('category'),
-        Item.name,
-        Item.description,
-        Item.price
-    ).filter(Item.category_id == Category.id).all()
+    # data = db.session.query(
+    #     Item.id,
+    #     Category.name.label('category'),
+    #     Item.name,
+    #     Item.description,
+    #     Item.price
+    # ).filter(Item.category_id == Category.id).all()
 
-    print("\n\n items : -->", items[0])
+    result = [item.format() for item in itemsal]
+    total_results = len(result)
+
+    for item in itemsal:
+        print(item)
+        print("this is result alchemy")
+        print(result)
+
+    # print("\n\n items : -->", items[0])
     # RETURN: items : --> <class 'manage.Item'>: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x110c56610>, 'description': 'Lorem ipsum dolor sit amet - Item 01 AA', 'name': 'Item 01 AA', 'id': 1, 'price': 110, 'category_id': 1}
 
-    print("\n\n data : -->", data[0])
+    # print("\n\n data : -->", data[0])
     # RETURN: data : --> (1, 'Category 01 AA', 'Item 01 AA', 'Lorem ipsum dolor sit amet - Item 01 AA', 110)
 
-    result = [item.format() for item in items]
-    total_results = len(items)
+    # result = [item.format() for item in items]
+    # total_results = len(items)
 
-    if total_results == 0:
-        abort(404)
-
-    return jsonify({
-        'success':  True,
-        'items':   result
-    }), 200
+    # if total_results == 0:
+    #     abort(404)
+    #
+    # return jsonify({
+    #     'success':  True,
+    #     'items':   result
+    # }), 200
 
 # ----------------------------------------------------------------------------
 # Update >> Item

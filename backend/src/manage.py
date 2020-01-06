@@ -42,6 +42,7 @@ class Category(db.Model):
     __tablename__   = 'categories'
     id              = db.Column(db.Integer, primary_key=True)
     name            = db.Column(db.String(150), nullable=False)
+    category        = db.relationship("Category", backref="item")
 
     def insert(self):
         db.session.add(self)
@@ -90,9 +91,11 @@ class Item(db.Model):
         db.session.commit()
 
     def format(self):
+
         return {
             'id':           self.id,
-            'category_id':  self.category_id,
+            #'category_id':  self.category_id,
+            'category':     {'id': self.category.id, 'name': self.category.name},
             'name':         self.name,
             'description':  self.description,
             'price':        self.price
