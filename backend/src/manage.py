@@ -29,9 +29,9 @@ def db_drop_and_create_all():
     db.session.add(Category(name = "Category 02 BB"))
     db.session.commit()
 
-    db.session.add(Item(category_id = 1, name = "Item 01 AA", description = "Lorem ipsum dolor sit amet - Item 01 AA", price = 110))
-    db.session.add(Item(category_id = 1, name = "Item 02 AA", description = "Lorem ipsum dolor sit amet - Item 02 AA", price = 120))
-    db.session.add(Item(category_id = 2, name = "Item 03 AA", description = "Lorem ipsum dolor sit amet - Item 03 AA", price = 130))
+    db.session.add(Item(category_id = 1, name = "Item 01 - name AA", description = "Lorem ipsum dolor sit amet - description of Item 01 AA", price = 110))
+    db.session.add(Item(category_id = 1, name = "Item 02 - name BB", description = "Lorem ipsum dolor sit amet - description of Item 02 BB", price = 120))
+    db.session.add(Item(category_id = 2, name = "Item 03 - name CC", description = "Lorem ipsum dolor sit amet - description of Item 03 CC", price = 130))
     db.session.commit()
 
 # ----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ class Item(db.Model):
     __tablename__   = 'items'
     id              = db.Column(db.Integer, primary_key=True)
     category_id     = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-    category        = db.relationship("Category", backref="item")
+    category        = db.relationship("Category", backref="items")
     name            = db.Column(db.String(150), unique=True, nullable=False)
     description     = db.Column(db.String, nullable=False)
     price           = db.Column(db.Integer, nullable=False)

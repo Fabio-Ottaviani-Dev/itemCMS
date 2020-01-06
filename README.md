@@ -41,7 +41,47 @@ With Postgres running, in terminal run:
 createdb itemcms
 ```
 
-### Running the server
+### Test with Unit Test
+```bash
+cd <mainDir>
+source env/bin/activate
+cd backend/src/
+
+# run the tests
+
+# NOTE change "Billy" with your postgresql user
+export DATABASE_URL="postgresql://Billy@localhost:5432/itemcms" && export DEBUG=True &&
+python test_api.py
+
+```
+
+## Authentication
+The authentication, related profiles, privileges and roles are implemented with [Auth0](https://auth0.com/)
+
+
+### Profile roles and privileges
+
+| Actor         | Role                           | CURD Privileges      |
+| ------------- | ------------------------------ | -------------------- |
+| Admin         | Administrator (Login required) | All privileges       |
+| User          | User          (Login required) | See the schema below |
+| Public        | Public     (NO login required) | See the schema below |
+
+### Public CURD privileges
+
+| Tables          | Create | Read   | Update | Delete  |
+| --------------- | ------ | ------ | ------ |  ------ |
+| items           | False  | True   | False  | False   |
+| categories      | False  | True   | False  | False   |
+
+### User CURD privileges
+
+| Tables          | Create | Read   | Update | Delete  |
+| --------------- | ------ | ------ | ------ |  ------ |
+| items           | False  | True   | True   | False   |
+| categories      | False  | True   | True   | False   |
+
+## Running the server
 ```bash
 # -----------------------------------------------------------------------------
 # gunicorn
