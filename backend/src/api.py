@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 from flask_cors import CORS
 from utilities.errorhandler import http_error_handler
-#from auth.auth0 import AuthTest
 from auth.auth import AuthError, requires_auth
 from manage import Category, Item, db_drop_and_create_all
 
@@ -55,10 +54,6 @@ def hello_dude():
 # ----------------------------------------------------------------------------
 # Auth TEST
 # ----------------------------------------------------------------------------
-# @app.route('/auth', methods=['GET'])
-# def test_auth():
-# 	return jsonify(AuthTest())
-# ----------------------------------------------------------------------------
 
 @app.route('/login-results', methods=['GET'])
 def login_results():
@@ -78,8 +73,7 @@ def login_results():
 
 @app.route('/categories', methods=['POST'])
 # @requires_auth('create:category')
-# pass: --> payload
-def create_category():
+def create_category(payload=None):
 
     name = request.json.get('name', None)
 
@@ -133,8 +127,7 @@ def get_all_categories():
 
 @app.route('/categories/<int:category_id>', methods=['PATCH'])
 # @requires_auth('update:category')
-# pass: --> payload
-def update_category(category_id):
+def update_category(category_id, payload=None):
 
     category = Category.query.get_or_404(category_id)
 
@@ -169,8 +162,7 @@ def update_category(category_id):
 
 @app.route('/categories/<int:category_id>', methods=['DELETE'])
 # @requires_auth('delete:category')
-# pass: --> payload
-def delete_category(category_id):
+def delete_category(category_id, payload=None):
 
     category = Category.query.get_or_404(category_id)
 
@@ -208,8 +200,7 @@ def delete_category(category_id):
 
 @app.route('/items', methods=['POST'])
 # @requires_auth('create:item')
-# pass: --> payload
-def create_item():
+def create_item(payload=None):
 
     category_id     = request.json.get('category_id', None)
     name            = request.json.get('name', None)
@@ -277,8 +268,7 @@ def get_items():
 
 @app.route('/items/<int:item_id>', methods=['PATCH'])
 # @requires_auth('update:item')
-# pass: --> payload
-def update_item(item_id):
+def update_item(item_id, payload=None):
 
     item = Item.query.get_or_404(item_id)
 
@@ -322,8 +312,7 @@ def update_item(item_id):
 
 @app.route('/items/<int:item_id>', methods=['DELETE'])
 # @requires_auth('delete:item')
-# pass: --> payload
-def delete_item(item_id):
+def delete_item(item_id, payload=None):
 
     item = Item.query.get_or_404(item_id)
 
