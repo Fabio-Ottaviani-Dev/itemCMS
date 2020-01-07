@@ -1,19 +1,20 @@
 import json
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
-from jose import jwt # https://pypi.org/project/python-jose/
+from jose import jwt  # https://pypi.org/project/python-jose/
 from jose.exceptions import JWTError
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN    = 'f0dev.auth0.com'
-ALGORITHMS      = ['RS256']
-API_AUDIENCE    = 'item'
+AUTH0_DOMAIN = 'f0dev.auth0.com'
+ALGORITHMS = ['RS256']
+API_AUDIENCE = 'item'
 
 # ----------------------------------------------------------------------------
 # AuthError Exception
 # A standardized way to communicate auth failure modes
 # ----------------------------------------------------------------------------
+
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -29,6 +30,7 @@ class AuthError(Exception):
 #     5. return the token part of the header
 # @DONE
 # ----------------------------------------------------------------------------
+
 
 def get_token_auth_header():
 
@@ -75,6 +77,7 @@ def get_token_auth_header():
 # @DONE
 # ----------------------------------------------------------------------------
 
+
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
 
@@ -109,6 +112,7 @@ def check_permissions(permission, payload):
 #     https://stackoverflow.com/questions/50236117/
 # @DONE
 # ----------------------------------------------------------------------------
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -176,6 +180,7 @@ def verify_decode_jwt(token):
 #        to the decorated method
 # @DONE
 # ----------------------------------------------------------------------------
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
