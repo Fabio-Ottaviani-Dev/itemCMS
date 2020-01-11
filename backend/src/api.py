@@ -78,7 +78,7 @@ def login_results():
 
 
 @app.route('/categories', methods=['POST'])
-@requires_auth('create:category')
+# @requires_auth('create:category')
 def create_category(payload=None):
 
     name = request.json.get('name', None)
@@ -136,7 +136,7 @@ def get_all_categories():
 
 
 @app.route('/categories/<int:category_id>', methods=['PATCH'])
-@requires_auth('update:category')
+# @requires_auth('update:category')
 def update_category(category_id, payload=None):
 
     category = Category.query.get_or_404(category_id)
@@ -173,7 +173,7 @@ def update_category(category_id, payload=None):
 
 
 @app.route('/categories/<int:category_id>', methods=['DELETE'])
-@requires_auth('delete:category')
+# @requires_auth('delete:category')
 def delete_category(category_id, payload=None):
 
     category = Category.query.get_or_404(category_id)
@@ -212,7 +212,7 @@ def delete_category(category_id, payload=None):
 # ----------------------------------------------------------------------------
 
 @app.route('/items', methods=['POST'])
-@requires_auth('create:item')
+# @requires_auth('create:item')
 def create_item(payload=None):
 
     category_id = request.json.get('category_id', None)
@@ -283,7 +283,7 @@ def get_items():
 
 
 @app.route('/items/<int:item_id>', methods=['PATCH'])
-@requires_auth('update:item')
+# @requires_auth('update:item')
 def update_item(item_id, payload=None):
 
     item = Item.query.get_or_404(item_id)
@@ -329,7 +329,7 @@ def update_item(item_id, payload=None):
     # OK 200 | curl -X DELETE http://127.0.0.1:5000/items/1
 
 @app.route('/items/<int:item_id>', methods=['DELETE'])
-@requires_auth('delete:item')
+# @requires_auth('delete:item')
 def delete_item(item_id, payload=None):
 
     item = Item.query.get_or_404(item_id)

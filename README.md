@@ -26,20 +26,34 @@ Follow instructions to install the latest version of  PostgreSQL for your platfo
 ### Virtual Enviornment
 Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
+### On Ubuntu 18.04
+```bash
+# https://linuxize.com/post/how-to-create-python-virtual-environments-on-ubuntu-18-04/
+sudo apt install python3-venv
+# Within the directory
+python3 -m venv env
+source env/bin/activate
+```
+
+### Database Setup
+With Postgres running, in terminal run:
+
+```bash
+# On Ubuntu 18.04
+sudo -u postgres psql
+create user billy password 'billy123';
+create database itemcms owner billy;
+```
+
 ### PIP Dependencies
 With your virtual environment setup and running, install dependencies by running:
 
 ```bash
+# with active virtual environment
 pip3 install -r requirements.txt
 ```
 
 This will install all of the required packages we selected within the `requirements.txt` file.
-
-## Database Setup
-With Postgres running, in terminal run:
-```bash
-createdb itemcms
-```
 
 ## Running the server
 ```bash
@@ -52,17 +66,17 @@ web: gunicorn --bind 127.0.0.1:5000 --pythonpath backend/src wsgi:app
 
 
 # Local
-# NOTE change "Billy" with your postgresql user
+# NOTE change "billy" with your postgresql user
 cd <mainDir>
 source env/bin/activate
-export DATABASE_URL="postgresql://Billy@localhost:5432/itemcms" &&
+export DATABASE_URL="postgresql://billy:billy123@127.0.0.1:5432/itemcms" &&
 export DEBUG=True &&
 gunicorn --bind 127.0.0.1:5000 --pythonpath backend/src wsgi:app --reload --log-level debug
 
 # -----------------------------------------------------------------------------
 ```
 
-## db drop and create all
+### db drop and create all
 
 Got to: http://127.0.0.1:5000/reset-db
 
@@ -72,8 +86,7 @@ cd <mainDir>
 source env/bin/activate
 
 # run the tests
-# NOTE change "Billy" with your postgresql user
-export DATABASE_URL="postgresql://Billy@localhost:5432/itemcms" && export DEBUG=True && python backend/src/test_api.py
+export DATABASE_URL="postgresql://billy:billy123@127.0.0.1:5432/itemcms" && export DEBUG=True && python backend/src/test_api.py
 
 ```
 
