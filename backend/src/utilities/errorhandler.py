@@ -46,6 +46,14 @@ def http_error_handler(app, jsonify):
             'message': 'Method Not Allowed'
         }), 405
 
+    @app.errorhandler(413)
+    def method_not_allowed(error):
+        return jsonify({
+            'success': False,
+            'error': 413,
+            'message': 'Payload Too Large'
+        }), 405
+
     @app.errorhandler(422)
     def unprocessable_entity(error):
         return jsonify({

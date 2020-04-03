@@ -1,18 +1,11 @@
-# Item CMS
+# python-flask-rest-api-file-upload
 
 ## Overview
-Item CMS is a basic RESTful APIs framework design to manage items, the not typed structure is designed to be suitable for a wide range of products / items.
+Lorem ipsum dolor sit amet..
 
-## Tech Stack (Key Dependencies)
-The tech stack will include:
+## Dependencies
 
 * **[Python3](https://www.python.org/)** and **[Flask](http://flask.palletsprojects.com)** as server language and server framework.
-
-* **[SQLAlchemy](https://www.sqlalchemy.org/)** ORM library.
-
-* **[Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)** for creating and running schema migrations.
-
-* **[Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#)** to handle cross origin requests.
 
 ## Installing Dependencies
 
@@ -20,13 +13,10 @@ The tech stack will include:
 
 Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
 
-### PostgreSQL
-Follow instructions to install the latest version of  PostgreSQL for your platform in the [PostgreSQL download](https://www.postgresql.org/download/)
+### Virtual Environment
+Instructions for setting up a virtual environment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
-### Virtual Enviornment
-Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
-
-### On Ubuntu 18.04
+#### Venv on Ubuntu 18.04 LTS
 ```bash
 # https://linuxize.com/post/how-to-create-python-virtual-environments-on-ubuntu-18-04/
 sudo apt install python3-venv
