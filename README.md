@@ -1,11 +1,20 @@
-# python-flask-rest-api-file-upload
+# Item CMS
 
 ## Overview
-Lorem ipsum dolor sit amet..
+Item CMS is a basic RESTful APIs framework design to manage items, the not typed structure is designed to be suitable for a wide range of products / items.
 
-## Dependencies
+
+## Tech Stack (Key Dependencies)
+The tech stack will include:
+
 
 * **[Python3](https://www.python.org/)** and **[Flask](http://flask.palletsprojects.com)** as server language and server framework.
+
+* **[SQLAlchemy](https://www.sqlalchemy.org/)** ORM library.
+
+* **[Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)** for creating and running schema migrations.
+
+* **[Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#)** to handle cross origin requests.
 
 ## Installing Dependencies
 
