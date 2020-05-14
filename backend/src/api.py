@@ -20,12 +20,14 @@ http_error_handler(app, jsonify)
 # Set up CORS and CORS Headers
 # ----------------------------------------------------------------------------
 
+
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE')
     return response
+
 
 # ----------------------------------------------------------------------------
 # db_drop_and_create
@@ -211,6 +213,7 @@ def delete_category(category_id, payload=None):
 # **DONE**
 # ----------------------------------------------------------------------------
 
+
 @app.route('/items', methods=['POST'])
 # @requires_auth('create:item')
 def create_item(payload=None):
@@ -224,14 +227,7 @@ def create_item(payload=None):
         abort(400)
 
     try:
-
-        item = Item(
-            category_id=category_id,
-            name=name,
-            description=description,
-            price=price
-        )
-
+        item = Item(category_id=category_id, name=name, description=description, price=price)
         item.insert()
 
         return jsonify({
@@ -250,20 +246,29 @@ def create_item(payload=None):
 
 @app.route('/items', methods=['GET'])
 def get_items():
-
+# --
+    PER_PAGE = 2
+    page = request.args.get('page', 1, type=int)
+    start =  (page - 1) * PER_PAGE
+    end = start + PER_PAGE
+# --
     items = db.session.query(Item).join(Category, Category.id == Item.category_id).all()
     total_results = len(items)
 
     if total_results == 0:
         abort(404)
+    try:
+        result = [item.format() for item in items]
+        result_set  = result[start:end]
 
-    result = [item.format() for item in items]
-
-    return jsonify({
-        'success':  True,
-        'items':   result,
-        'total_results': total_results,
-    }), 200
+        return jsonify({
+            'success':  True,
+            #'items_paginated':   result_set,
+            'items':   result,
+            'total_results': total_results,
+        }), 200
+    except:
+        abort(422)
 
 # ----------------------------------------------------------------------------
 # Update >> Item
